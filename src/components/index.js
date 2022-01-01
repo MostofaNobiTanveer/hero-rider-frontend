@@ -3,3 +3,4 @@ export { default as Banner } from './Banner';
 export { default as Navbar } from './Navbar';
 export { default as Loading } from './Loading';
 export { default as CheckoutForm } from './CheckoutForm';
+export { default as SingleUserList } from './SingleUserList';

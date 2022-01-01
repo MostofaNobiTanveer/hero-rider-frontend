@@ -15,11 +15,11 @@ initializeFirebase();
 
 const useFirebase = () => {
   const [user, setUser] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState('');
-  const [adminLoading, setAdminLoading] = useState(true);
+  const [adminLoading, setAdminLoading] = useState(false);
   const [admin, setAdmin] = useState(false);
-  const [riderLoading, setRiderLoading] = useState(true);
+  const [riderLoading, setRiderLoading] = useState(false);
   const [rider, setRider] = useState(false);
 
   const auth = getAuth();
@@ -84,6 +84,7 @@ const useFirebase = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const unsubscribed = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
@@ -100,10 +101,8 @@ const useFirebase = () => {
     fetch(`http://localhost:4000/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setAdmin(data.admin);
         setRider(data.rider);
-        setRiderLoading(false);
         setAdminLoading(false);
       });
   }, [user.email]);

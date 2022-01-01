@@ -101,15 +101,40 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     isActive
                       ? 'text-gray-700 transform transition-all px-2 py-2 rounded-md text-base'
-                      : 'text-gray-300 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
+                      : 'text-gray-400 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
                   }
                 >
                   Home
                 </NavLink>
+                {user?.email && (
+                  <NavLink
+                    to="/orders"
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'text-gray-700 transform transition-all px-2 py-2 rounded-md text-base'
+                        : 'text-gray-400 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
+                    }
+                  >
+                    Orders
+                  </NavLink>
+                )}
+                {admin && (
+                  <NavLink
+                    to="/users"
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'text-gray-700 transform transition-all px-2 py-2 rounded-md text-base'
+                        : 'text-gray-400 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
+                    }
+                  >
+                    Users
+                  </NavLink>
+                )}
                 {user?.email ? (
                   <button
                     onClick={() => userSignOut()}
-                    className="text-gray-300 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base"
+              
+                    className="text-gray-400 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base"
                   >
                     Sign Out
                   </button>
@@ -120,7 +145,7 @@ const Navbar = () => {
                       className={({ isActive }) =>
                         isActive
                           ? 'text-gray-700 transform transition-all px-2 py-2 rounded-md text-base'
-                          : 'text-gray-300 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
+                          : 'text-gray-400 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
                       }
                     >
                       Signup to ride
@@ -130,7 +155,7 @@ const Navbar = () => {
                       className={({ isActive }) =>
                         isActive
                           ? 'text-gray-700 transform transition-all px-2 py-2 rounded-md text-base'
-                          : 'text-gray-300 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
+                          : 'text-gray-400 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
                       }
                     >
                       Signup as rider
@@ -140,7 +165,7 @@ const Navbar = () => {
                       className={({ isActive }) =>
                         isActive
                           ? 'text-gray-700 transform transition-all px-2 py-2 rounded-md text-base'
-                          : 'text-gray-300 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
+                          : 'text-gray-400 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base'
                       }
                     >
                       Signin

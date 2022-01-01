@@ -7,6 +7,8 @@ import {
   SignUpAsRider,
   SignUpToRide,
   Payment,
+  Orders,
+  Users,
 } from './pages';
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
         <Route path="signup-as-rider" element={<SignUpAsRider />} />
         <Route path="signup-to-ride" element={<SignUpToRide />} />
         <Route path="payment/:id" element={<Payment />} />
+        <Route path="orders" element={<Orders />} />
+        <Route path="users" element={<Users />} />
       </Routes>
     </div>
   );

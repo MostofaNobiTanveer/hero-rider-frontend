@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useAuthContext } from '../contexts/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutForm = ({ service }) => {
   const [clientSecret, setClientSecret] = useState('');
   const [success, setSuccess] = useState('');
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate()
   const { user } = useAuthContext();
   const { price } = service;
   const stripe = useStripe();
@@ -30,8 +32,7 @@ const CheckoutForm = ({ service }) => {
     const card = elements.getElement(CardElement);
     if (card === null) return;
 
-    setProcessing(true);
-
+    
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card,
@@ -42,6 +43,7 @@ const CheckoutForm = ({ service }) => {
     } else {
       setError('');
       console.log('[PaymentMethod]', paymentMethod);
+      setProcessing(true);
     }
     // payment intent
     const { paymentIntent, error: intentError } =
@@ -60,8 +62,23 @@ const CheckoutForm = ({ service }) => {
     } else {
       setError('');
       setSuccess('Your payment processed successfully');
-      console.log(paymentIntent);
       setProcessing(false);
+      // save to DB
+      const orderedService = {
+        user,
+        amount: paymentIntent.amount,
+        created: paymentIntent.created,
+        transaction: paymentIntent.client_secret.slice('_secret')[0],
+      };
+      fetch('http://localhost:4000/services-ordered', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(orderedService),
+      })
+        .then((res) => res.json())
+        .then((data) => navigate());
     }
   };
   return (
@@ -105,8 +122,6 @@ const CheckoutForm = ({ service }) => {
                   </div>
                   <div className="col-span-6">
                     {error && <p className="text-red-500">{error}</p>}
-                  </div>
-                  <div className="col-span-6">
                     {success && <p className="text-green-500">{success}</p>}
                   </div>
                   {/* submit form */}
@@ -114,10 +129,10 @@ const CheckoutForm = ({ service }) => {
                     <div className="rounded">
                       <button
                         type="submit"
-                        disabled={!stripe || processing}
+                        disabled={!stripe || success}
                         className="block disable w-full py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700"
                       >
-                        {processing ? 'Processing...' : `Pay ${price}`}
+                        {processing ? 'Processing...' : `Pay $${price}`}
                       </button>
                     </div>
                   </div>

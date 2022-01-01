@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
   getAuth,
-  GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -17,9 +16,11 @@ initializeFirebase();
 const useFirebase = () => {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [adminLoading, setAdminLoading] = useState(true);
   const [authError, setAuthError] = useState('');
+  const [adminLoading, setAdminLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
+  const [riderLoading, setRiderLoading] = useState(true);
+  const [rider, setRider] = useState(false);
 
   const auth = getAuth();
   //   const googleProvider = new GoogleAuthProvider();
@@ -41,6 +42,7 @@ const useFirebase = () => {
         // redirect after sign up
         const redirectUri = state?.from || '/';
         navigate(redirectUri, { replace: true });
+        setAuthError('');
       })
       .catch((error) => {
         setAuthError(error.message);
@@ -70,7 +72,8 @@ const useFirebase = () => {
     setIsLoading(true);
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        alert('Password reset email sent!');
+        alert('Password reset email was sent!');
+        setAuthError('');
       })
       .catch((error) => {
         setAuthError(error.message);
@@ -97,7 +100,10 @@ const useFirebase = () => {
     fetch(`http://localhost:4000/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setAdmin(data.admin);
+        setRider(data.rider);
+        setRiderLoading(false);
         setAdminLoading(false);
       });
   }, [user.email]);
@@ -129,7 +135,9 @@ const useFirebase = () => {
   return {
     user,
     admin,
+    rider,
     adminLoading,
+    riderLoading,
     isLoading,
     authError,
     signUpUser,

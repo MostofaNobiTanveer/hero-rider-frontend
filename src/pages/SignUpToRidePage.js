@@ -3,19 +3,24 @@ import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Navbar } from '../components';
 import { useAuthContext } from '../contexts/AuthProvider';
+import ScrollToTop from '../utilities/ScrollToTop';
 
 const SignUpToRidePage = () => {
-  const { isLoading, signUpUser } = useAuthContext();
+  const { isLoading, signUpUser, authError } = useAuthContext();
   const { state } = useLocation();
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
-    console.log(data)
+    if (data.password !== data.confirm_password) {
+      alert('Password did not match');
+      return;
+    }
     signUpUser(data.email, data.password, data.name, data, state, navigate);
     reset();
   };
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <section className="py-12 w-full max-w-7xl mx-auto px-6">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -256,7 +261,7 @@ const SignUpToRidePage = () => {
                         Password<span className="text-red-500">*</span>
                       </label>
                       <input
-                        type="text"
+                        type="password"
                         required
                         name="password"
                         id="password"
@@ -273,7 +278,7 @@ const SignUpToRidePage = () => {
                         Confirm password<span className="text-red-500">*</span>
                       </label>
                       <input
-                        type="text"
+                        type="password"
                         required
                         name="confirm_password"
                         id="confirm_password"
@@ -281,6 +286,7 @@ const SignUpToRidePage = () => {
                         className="bg-gray-50 mt-1 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
+                    {authError && <p className="text-red-500">{authError}</p>}
                     {/* submit form */}
                     <div className="col-span-6">
                       <div className="pt-4 rounded">
@@ -288,7 +294,7 @@ const SignUpToRidePage = () => {
                           type="submit"
                           className="block w-full py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700"
                         >
-                          Sign Up
+                          {isLoading ? 'Loading...' : 'Sign Up'}
                         </button>
                       </div>
                     </div>

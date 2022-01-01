@@ -7,7 +7,8 @@ const SigninPage = () => {
   const [loginData, setLoginData] = useState({});
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { isLoading, signinUser, authError } = useAuthContext();
+  const { isLoading, signinUser, authError, handleForgotPassword } =
+    useAuthContext();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -83,7 +84,7 @@ const SigninPage = () => {
                         Password<span className="text-red-500">*</span>
                       </label>
                       <input
-                        type="text"
+                        type="password"
                         required
                         name="password"
                         onChange={handleOnChange}
@@ -91,14 +92,19 @@ const SigninPage = () => {
                         className="bg-gray-50 mt-1 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
-                    {authError && (
-                      <div className="col-span-6">
-                        <p className="text-red-500">{authError}</p>
-                      </div>
-                    )}
+                    {/* forgot password */}
+                    <div className="col-span-6">
+                      <button
+                        onClick={() => handleForgotPassword()}
+                        className="text-gray-500 underline hover:text-black"
+                      >
+                        Forgot password?
+                      </button>
+                    </div>
+                    {authError && <p className='text-red-500'>{authError}</p>}
                     {/* submit form */}
                     <div className="col-span-6">
-                      <div className="pt-4 rounded">
+                      <div className="rounded">
                         <button
                           type="submit"
                           className="block w-full py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700"

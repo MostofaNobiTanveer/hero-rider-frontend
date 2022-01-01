@@ -1,6 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { Home, Signin, NotFound, SignUpAsRider, SignUpToRide } from './pages';
+import {
+  Home,
+  Signin,
+  NotFound,
+  SignUpAsRider,
+  SignUpToRide,
+  Payment,
+} from './pages';
 
 function App() {
   return (
@@ -11,6 +18,7 @@ function App() {
         <Route path="signin" element={<Signin />} />
         <Route path="signup-as-rider" element={<SignUpAsRider />} />
         <Route path="signup-to-ride" element={<SignUpToRide />} />
+        <Route path="payment/:id" element={<Payment />} />
       </Routes>
     </div>
   );

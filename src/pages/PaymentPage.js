@@ -14,7 +14,7 @@ const PaymentPage = () => {
   const { id } = useParams();
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:4000/services/${id}`)
+    fetch(`https://still-island-68728.herokuapp.com/services/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);

@@ -18,21 +18,21 @@ const SignupButtons = () => {
   const { rider, admin, user } = useAuthContext();
   const [services, setServices] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:4000/services')
+    fetch('https://still-island-68728.herokuapp.com/services')
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, [user.email]);
   return (
     <section className="font-body">
       {!user?.email ? (
-        <div className="flex-1 overflow-hidden grid md:grid-cols-2 h-72 md:h-60 border-y border-slate-200 md:divide-x md:divide-y-0 divide-y divide-slate-200">
+        <div className="flex-1 overflow-hidden grid md:grid-cols-2 border-y border-slate-200 md:divide-x md:divide-y-0 divide-y divide-slate-200">
           {links.map((item) => {
             const { id, title, href } = item;
             return (
               <Link
                 key={id}
                 to={href}
-                className="card overflow-hidden relative p-4 group focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
+                className="card sm:py-12 overflow-hidden relative p-4 group focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
               >
                 <div className="flex flex-col gap-3 justify-center items-center h-full">
                   <div className="truncate text-center">
@@ -49,14 +49,14 @@ const SignupButtons = () => {
           })}
         </div>
       ) : (
-        <div className="flex-1 overflow-hidden grid md:grid-cols-2 h-72 md:h-60 border-y border-slate-200 md:divide-x md:divide-y-0 divide-y divide-slate-200">
+        <div className="flex-1 overflow-hidden grid md:grid-cols-2 border-y border-slate-200 md:divide-x md:divide-y-0 divide-y divide-slate-200">
           {services.map((item) => {
             const { _id, title, price } = item;
             return (
               <Link
                 key={_id}
                 to={`/payment/${_id}`}
-                className="card overflow-hidden relative p-4 group focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
+                className="card sm:py-12 overflow-hidden relative p-4 group focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
               >
                 <div className="flex flex-col gap-3 justify-center items-center h-full">
                   {title.includes('car') ? (

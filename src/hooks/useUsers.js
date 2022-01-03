@@ -12,7 +12,9 @@ const useUsers = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:4000/users?page=${page}&&size=${size}`)
+    fetch(
+      `https://still-island-68728.herokuapp.com/users?page=${page}&&size=${size}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setUsers(data.users);
@@ -45,22 +47,23 @@ const useUsers = () => {
   const blockUsers = (userState) => {
     let arrayids = [];
     userState.forEach((d) => {
+      fetch('https://still-island-68728.herokuapp.com/users', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ids: userState,
+          blocked: true,
+        }),
+      })
+        .then((res) => res.json())
+        .catch((err) => console.log(err));
       if (d.select) {
         arrayids.push(d._id);
       }
     });
-    fetch('http://localhost:4000/users', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        _id: '5f0b9f9f9f9f9f9f9f9f9f9',
-        isBlocked: true,
-      }),
-    })
-      .then((res) => res.json())
-      .catch((err) => console.log(err));
+    console.log(arrayids)
   };
 
   return {

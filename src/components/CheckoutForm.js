@@ -8,14 +8,14 @@ const CheckoutForm = ({ service }) => {
   const [success, setSuccess] = useState('');
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { user } = useAuthContext();
   const { price } = service;
   const stripe = useStripe();
   const elements = useElements();
 
   useEffect(() => {
-    fetch('http://localhost:4000/create-payment-intent', {
+    fetch('https://still-island-68728.herokuapp.com/create-payment-intent', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -32,7 +32,6 @@ const CheckoutForm = ({ service }) => {
     const card = elements.getElement(CardElement);
     if (card === null) return;
 
-    
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card,
@@ -70,7 +69,7 @@ const CheckoutForm = ({ service }) => {
         created: paymentIntent.created,
         transaction: paymentIntent.client_secret.slice('_secret')[0],
       };
-      fetch('http://localhost:4000/services-ordered', {
+      fetch('https://still-island-68728.herokuapp.com/services-ordered', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

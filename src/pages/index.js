@@ -4,5 +4,4 @@ export { default as NotFound } from './NotFoundPage';
 export { default as SignUpToRide } from './SignUpToRidePage';
 export { default as SignUpAsRider } from './SignUpAsRiderPage';
 export { default as Payment } from './PaymentPage';
-export { default as Orders } from './OrdersPage';
 export { default as Users } from './UsersPage';

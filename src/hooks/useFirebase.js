@@ -98,7 +98,7 @@ const useFirebase = () => {
 
   useEffect(() => {
     setAdminLoading(true);
-    fetch(`http://localhost:4000/users/${user.email}`)
+    fetch(`https://still-island-68728.herokuapp.com/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setAdmin(data.admin);
@@ -122,7 +122,7 @@ const useFirebase = () => {
   };
 
   const saveUsersToDb = (userData, method) => {
-    fetch('http://localhost:4000/users', {
+    fetch('https://still-island-68728.herokuapp.com/users', {
       method: method,
       headers: {
         'content-type': 'application/json',

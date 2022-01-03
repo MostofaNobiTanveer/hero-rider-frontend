@@ -30,14 +30,8 @@ const UsersPage = () => {
       {/* Table list */}
       <div className="flex flex-col">
         {/* filter */}
-        <div className="container px-4 w-full mx-auto m-4 flex flex-col sm:flex-row gap-2 items-center">
+        <div className="max-w-7xl px-4 w-full mx-auto m-4 flex flex-col sm:flex-row gap-2 items-center">
           <div className="w-full sm:w-1/2">
-            {/* <label
-                    htmlFor="age"
-                    className="flex items-center text-sm font-medium text-gray-900"
-                  >
-                    Age <BsFilter className="text-2xl ml-1" />
-                  </label> */}
             <select
               required
               id="age"
@@ -81,14 +75,13 @@ const UsersPage = () => {
         </div>
         {/* filter */}
         <div className="-my-2 overflow-x-auto">
+          <div className="py-3 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <button
-            onClick={() => {
-              blockUsers(userState);
-            }}
+            className="py-2 mb-4 ml-4 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700"
+            onClick={() => blockUsers(userState)}
           >
             Block
           </button>
-          <div className="py-6 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">

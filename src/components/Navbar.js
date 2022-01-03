@@ -13,7 +13,7 @@ import { Loading } from '.';
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { user, rider, admin, adminLoading, riderLoading, userSignOut } =
+  const { user, admin, adminLoading, riderLoading, userSignOut } =
     useAuthContext();
 
   return (
@@ -47,42 +47,71 @@ const Navbar = () => {
                       <BsHouse className="flex-shrink-0 h-6 w-6" />
                       Home
                     </NavLink>
-                    <NavLink
-                      to="/signup-to-ride"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={({ isActive }) =>
-                        isActive
-                          ? 'bg-gray-100 transform transition-all hover:bg-gray-100 text-gray-900 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
-                          : 'text-gray-400 transform transition-all hover:bg-gray-100 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
-                      }
-                    >
-                      <RiUserAddLine className="flex-shrink-0 h-6 w-6" />
-                      Signup to ride
-                    </NavLink>
-                    <NavLink
-                      to="/signup-as-rider"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={({ isActive }) =>
-                        isActive
-                          ? 'bg-gray-100 transform transition-all hover:bg-gray-100 text-gray-900 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
-                          : 'text-gray-400 transform transition-all hover:bg-gray-100 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
-                      }
-                    >
-                      <RiUserAddLine className="flex-shrink-0 h-6 w-6" />
-                      Signup as rider
-                    </NavLink>
-                    <NavLink
-                      to="/signin"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={({ isActive }) =>
-                        isActive
-                          ? 'bg-gray-100 transform transition-all hover:bg-gray-100 text-gray-900 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
-                          : 'text-gray-400 transform transition-all hover:bg-gray-100 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
-                      }
-                    >
-                      <RiLoginBoxLine className="flex-shrink-0 h-6 w-6" />
-                      Sign in
-                    </NavLink>
+                    {!user?.email && (
+                      <>
+                        <NavLink
+                          to="/signup-to-ride"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={({ isActive }) =>
+                            isActive
+                              ? 'bg-gray-100 transform transition-all hover:bg-gray-100 text-gray-900 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
+                              : 'text-gray-400 transform transition-all hover:bg-gray-100 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
+                          }
+                        >
+                          <RiUserAddLine className="flex-shrink-0 h-6 w-6" />
+                          Signup to ride
+                        </NavLink>
+                        <NavLink
+                          to="/signup-as-rider"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={({ isActive }) =>
+                            isActive
+                              ? 'bg-gray-100 transform transition-all hover:bg-gray-100 text-gray-900 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
+                              : 'text-gray-400 transform transition-all hover:bg-gray-100 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
+                          }
+                        >
+                          <RiUserAddLine className="flex-shrink-0 h-6 w-6" />
+                          Signup as rider
+                        </NavLink>
+                        <NavLink
+                          to="/signin"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={({ isActive }) =>
+                            isActive
+                              ? 'bg-gray-100 transform transition-all hover:bg-gray-100 text-gray-900 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
+                              : 'text-gray-400 transform transition-all hover:bg-gray-100 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium flex gap-2 items-center'
+                          }
+                        >
+                          <RiLoginBoxLine className="flex-shrink-0 h-6 w-6" />
+                          Sign in
+                        </NavLink>
+                      </>
+                    )}
+                    {user.email && (
+                      <button
+                        onClick={() => {
+                          setDropdownOpen(false);
+                          userSignOut();
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 w-full text-left hover:bg-gray-50"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                          />
+                        </svg>
+                        Sign out
+                      </button>
+                    )}
                   </div>
                 </div>
               )}
@@ -106,7 +135,7 @@ const Navbar = () => {
                 >
                   Home
                 </NavLink>
-                {user?.email && (
+                {/* {user?.email && (
                   <NavLink
                     to="/orders"
                     className={({ isActive }) =>
@@ -117,7 +146,7 @@ const Navbar = () => {
                   >
                     Orders
                   </NavLink>
-                )}
+                )} */}
                 {admin && (
                   <NavLink
                     to="/users"
@@ -133,7 +162,6 @@ const Navbar = () => {
                 {user?.email ? (
                   <button
                     onClick={() => userSignOut()}
-              
                     className="text-gray-400 transform transition-all hover:text-gray-700 px-3 py-2 rounded-md text-base"
                   >
                     Sign Out
@@ -207,28 +235,6 @@ const Navbar = () => {
                             {user.email}
                           </div>
                         </div>
-                        <NavLink
-                          to="/dashboard"
-                          onClick={() => setDropdownOpen(false)}
-                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                        >
-                          <svg
-                            className="h-6 w-6"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="1"
-                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                            />
-                          </svg>
-                          <span className="mt-0.5">Dashboard</span>
-                        </NavLink>
                         <button
                           onClick={() => {
                             setDropdownOpen(false);
